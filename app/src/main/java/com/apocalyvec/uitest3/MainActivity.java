@@ -32,11 +32,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toogle);
 
         toogle.syncState();
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()) {
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                break;
             case R.id.nav_store:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StoreFragment()).commit();
                 break;
@@ -50,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "ECE2799 B18 Team 9", Toast.LENGTH_SHORT).show();
                 break;
         }
-        
 
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
