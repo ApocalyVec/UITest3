@@ -37,15 +37,5 @@
                 app:menu="@menu/drawer_menu"/>
 
         </android.support.v4.widget.DrawerLayout>
-    <android.support.design.widget.FloatingActionButton
 
-        android:src="@drawable/ic_add"
-        android:id="@+id/add_child"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        app:layout_anchor="@id/childrenList"
-        app:layout_anchorGravity="bottom|right|end"
-        />
 </android.support.design.widget.CoordinatorLayout>
