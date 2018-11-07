@@ -50,11 +50,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
                 break;
+            case R.id.nav_about:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+                break;
             case R.id.nav_help:
                 Toast.makeText(this, "Help Yourself...", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_about:
-                Toast.makeText(this, "ECE2799 B18 Team 9", Toast.LENGTH_SHORT).show();
                 break;
         }
 
