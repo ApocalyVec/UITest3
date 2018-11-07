@@ -1,6 +1,7 @@
 package com.apocalyvec.uitest3;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +15,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.text.MessageFormat;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private CoordinatorLayout content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
+        content = findViewById(R.id.content);
     }
 
     @Override
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(menuItem.getItemId()) {
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+//                FloatingActionButton hfab = (FloatingActionButton) Inflater.inflate()
+//                content.addView("layout");
                 break;
             case R.id.nav_store:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StoreFragment()).commit();
