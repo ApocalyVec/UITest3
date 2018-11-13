@@ -1,4 +1,4 @@
-package com.apocalyvec.uitest3;
+package com.apocalyvec.sleepandsound;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AboutFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        return inflater.inflate(com.apocalyvec.sleepandsound.R.layout.fragment_profile, container, false);
     }
 }

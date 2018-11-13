@@ -1,4 +1,4 @@
-package com.apocalyvec.uitest3;
+package com.apocalyvec.sleepandsound;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

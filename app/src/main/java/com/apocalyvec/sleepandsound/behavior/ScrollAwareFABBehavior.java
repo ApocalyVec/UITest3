@@ -1,4 +1,4 @@
-package com.apocalyvec.uitest3.behavior;
+package com.apocalyvec.sleepandsound.behavior;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
