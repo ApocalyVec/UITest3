@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/childrenList"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:id="@+id/childrenList"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@android:color/darker_gray">
@@ -47,7 +47,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="32dp"
-                                android:text="Child 1" />
+                                android:id="@+id/childName"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
