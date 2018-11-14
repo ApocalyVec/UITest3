@@ -1,5 +1,6 @@
 package com.apocalyvec.sleepandsound;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -10,7 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -76,5 +81,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
         super.onBackPressed();
+    }
+
+    public void goToChild(View view) {
+        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, ChildViewActivity.class);
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
     }
 }
