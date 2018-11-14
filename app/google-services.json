@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "75464924190",
+    "firebase_url": "https://sleepandsound-d1073.firebaseio.com",
+    "project_id": "sleepandsound-d1073",
+    "storage_bucket": "sleepandsound-d1073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75464924190:android:7b89b04058c38500",
+        "android_client_info": {
+          "package_name": "com.apocalyvec.uitest3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75464924190-4pnbqt3n8ej8qm7p0vjimpk2dug8gu47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apocalyvec.uitest3",
+            "certificate_hash": "3cc256eaf893314b6703d132b62fb1c5b1a91bd3"
+          }
+        },
+        {
+          "client_id": "75464924190-6qtct2g470a5f4cfnlj7bgepkrdlscnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD5DfAfLg-8KyENBcQg5UMUxzAoqLACuU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75464924190-6qtct2g470a5f4cfnlj7bgepkrdlscnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
