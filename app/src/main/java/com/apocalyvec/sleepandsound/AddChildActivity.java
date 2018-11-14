@@ -1,17 +1,23 @@
 package com.apocalyvec.sleepandsound;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class AddChildActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUserChildren;
     private EditText childFirstName;
     private EditText childLastName;
     private EditText childAge;
@@ -20,7 +26,7 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabaseUserChildren = FirebaseDatabase.getInstance().getReference().child("Users").child("User_1").child("Children");
 
         childFirstName = findViewById(R.id.ChildFirstName);
         childLastName = findViewById(R.id.ChildLastName);
@@ -28,7 +34,27 @@ public class AddChildActivity extends AppCompatActivity {
     }
 
     public void onAddClicked(View view) {
-        mDatabase.child(childFirstName.getText().toString().trim()).setValue("Ziheng Li");
+        String firstName = childFirstName.getText().toString().trim();
+        String lastName = childLastName.getText().toString().trim();
+        String age = childAge.getText().toString().trim();
+
+        HashMap<String, String> dataMap = new HashMap<>();
+        dataMap.put("FirstName", firstName);
+        dataMap.put("LastName", lastName);
+        dataMap.put("Age", age);
+
+        mDatabaseUserChildren.push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    Toast.makeText(AddChildActivity.this, "Child Added", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(AddChildActivity.this, "Error Adding Child!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         //Log.d("ChildViewActivity", "Database Clicked");
+
     }
 }
