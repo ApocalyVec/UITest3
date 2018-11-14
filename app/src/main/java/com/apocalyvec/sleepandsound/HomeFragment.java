@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,18 +21,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends Fragment {
 
-    private DatabaseReference mDatabaseUserChildren;
     private LinearLayout childrenList;
+    private DatabaseReference mDatabaseUserChildren;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // connect to Firebase
-        mDatabaseUserChildren = FirebaseDatabase.getInstance().getReference().child("Users").child("User_1").child("Children").child("Child_1").child("Age");
-
+        mDatabaseUserChildren = FirebaseDatabase.getInstance().getReference().child("Users").child("User_1").child("Children").child("Child_1").child("FirstName");
 
         return inflater.inflate(com.apocalyvec.sleepandsound.R.layout.fragment_home, container, false);
     }
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment {
         childrenList = getActivity().findViewById(R.id.childrenList);
 
         //put in the card view for children
+
         mDatabaseUserChildren.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -54,7 +57,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getActivity(), "changed", Toast.LENGTH_LONG).show();
             }
         });
     }

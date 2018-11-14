@@ -21,6 +21,7 @@ public class AddChildActivity extends AppCompatActivity {
     private EditText childFirstName;
     private EditText childLastName;
     private EditText childAge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
