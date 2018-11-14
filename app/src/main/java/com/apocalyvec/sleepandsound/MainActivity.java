@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void goToChild(View view) {
-        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-
         Intent intent = new Intent(this, ChildViewActivity.class);
 //        EditText editText = (EditText) findViewById(R.id.editText);
 //        String message = editText.getText().toString();
