@@ -83,12 +83,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onBackPressed();
     }
 
-    public void goToChild(View view) {
+    public void goToViewChild(View view) {
         Intent intent = new Intent(this, ChildViewActivity.class);
 //        EditText editText = (EditText) findViewById(R.id.editText);
 //        String message = editText.getText().toString();
 //        intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
 
+    public void goToAddChild(View view) {
+        Intent intent = new Intent(this, AddChildActivity.class);
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
     }
 }
