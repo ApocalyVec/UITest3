@@ -21,8 +21,12 @@
         <activity
             android:name=".ChildViewActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".AddChildActivity"
+        <activity
+            android:name=".AddChildActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".AccountActivity.LoginActivity" />
+        <activity android:name=".AccountActivity.SignupActivity" />
+        <activity android:name=".AccountActivity.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>
