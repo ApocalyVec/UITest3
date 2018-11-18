@@ -99,20 +99,20 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.dismiss();
             loginProgress.setVisibility(View.INVISIBLE);
             loginButton.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT).show();
         }else {
             firebaseAuth.signInWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "You Are in!", Toast.LENGTH_SHORT);
+                        Toast.makeText(LoginActivity.this, "You Are in!", Toast.LENGTH_SHORT).show();
                         finish();
                         Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(newIntent);
                     }else {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Some Thing Went Wrong, Check Your Credentials", Toast.LENGTH_SHORT);
+                        Toast.makeText(LoginActivity.this, "Some Thing Went Wrong, Check Your Credentials", Toast.LENGTH_SHORT).show();
                         loginProgress.setVisibility(View.INVISIBLE);
                         loginButton.setVisibility(View.VISIBLE);
                     }

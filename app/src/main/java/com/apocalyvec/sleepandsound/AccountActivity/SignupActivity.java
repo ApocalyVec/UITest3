@@ -93,7 +93,7 @@ public class SignupActivity extends AppCompatActivity {
         String email = userEmail.getText().toString();
 
         if(name.isEmpty() || password.isEmpty() || email.isEmpty()){
-            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT).show();
         }else {
             rtn = true;
         }
