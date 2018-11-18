@@ -33,8 +33,10 @@
         <activity
             android:name=".AddChildActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".AccountActivity.SignupActivity" />
-        <activity android:name=".AccountActivity.ResetPasswordActivity"></activity>
+        <activity android:name=".AccountActivity.SignupActivity"
+            android:parentActivityName=".AccountActivity.LoginActivity"/>
+        <activity android:name=".AccountActivity.ResetPasswordActivity"
+            android:parentActivityName=".AccountActivity.LoginActivity"></activity>
     </application>
 
 </manifest>
