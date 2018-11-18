@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apocalyvec.sleepandsound.AccountActivity.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -119,6 +120,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case com.apocalyvec.sleepandsound.R.id.nav_help:
                 Toast.makeText(this, "Help Yourself...", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_signout:
+                firebaseAuth.signOut();
+                finish();
+                Intent newIntent = new Intent(this, LoginActivity.class);
+                startActivity(newIntent);
                 break;
         }
 

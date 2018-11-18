@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextView loginMail;
     TextView loginPassword;
+    TextView resetPassword;
 
     private FirebaseAuth firebaseAuth;
 
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         loginProgress.setVisibility(View.INVISIBLE);
         loginMail = findViewById(R.id.login_mail);
         loginPassword = findViewById(R.id.login_password);
+        resetPassword = findViewById(R.id.tvForgotPassword);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -72,6 +74,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(newIntent);
             }
         });
+
+        resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                startActivity(newIntent);
+            }
+        });
     }
 
     private void validate() {
@@ -97,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                         progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "You Are in!", Toast.LENGTH_SHORT);
+                        finish();
                         Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(newIntent);
                     }else {
