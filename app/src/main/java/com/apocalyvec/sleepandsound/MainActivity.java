@@ -15,8 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,11 +37,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DatabaseReference mDatabaseUserChildren;
     public ArrayAdapter<String> arrayAdapter;
 
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.apocalyvec.sleepandsound.R.layout.activity_main);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(com.apocalyvec.sleepandsound.R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(com.apocalyvec.sleepandsound.R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawer, toolbar, com.apocalyvec.sleepandsound.R.string.navigation_drawer_open, com.apocalyvec.sleepandsound.R.string.navigation_drawer_close);
         drawer.addDrawerListener(toogle);
 
@@ -55,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(com.apocalyvec.sleepandsound.R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(com.apocalyvec.sleepandsound.R.id.nav_home);
+
         }
 
         content = findViewById(com.apocalyvec.sleepandsound.R.id.content);
