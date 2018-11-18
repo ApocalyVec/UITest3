@@ -23,4 +23,9 @@
                 android:title="Help" android:layout_height="wrap_content"/>
         </menu>
     </item>
+
+    <item android:id="@+id/nav_signout"
+        android:icon="@drawable/ic_signout"
+        android:title="Sign Out" android:layout_height="wrap_content"/>
+
 </menu>
