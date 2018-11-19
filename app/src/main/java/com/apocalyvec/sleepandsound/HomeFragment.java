@@ -47,18 +47,18 @@ public class HomeFragment extends Fragment {
 
         //put in the card view for children
 
-        mDatabaseUserChildren.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String FirstName = dataSnapshot.getValue().toString();
-                TextView name1 = getActivity().findViewById(R.id.childName);
-                name1.setText("Name: " + FirstName);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getActivity(), "changed", Toast.LENGTH_LONG).show();
-            }
-        });
+//        mDatabaseUserChildren.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String FirstName = dataSnapshot.getValue().toString();
+//                TextView name1 = getActivity().findViewById(R.id.childName);
+//                name1.setText("Name: " + FirstName);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(getActivity(), "changed", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 }

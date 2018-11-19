@@ -13,7 +13,7 @@
             android:title="Store"/>
     </group>
 
-    <item android:title="Information">
+    <item android:title="Others">
         <menu>
             <item android:id="@+id/nav_about"
                 android:icon="@drawable/ic_about"
