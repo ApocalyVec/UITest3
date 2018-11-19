@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mDatabaseUserChildren = FirebaseDatabase.getInstance().getReference().child("Users").child("User_1").child("Children").child("Child_1").child("FirstName");
+        mDatabaseUserChildren = FirebaseDatabase.getInstance().getReference().child("Users");
 
         return inflater.inflate(com.apocalyvec.sleepandsound.R.layout.fragment_home, container, false);
     }
@@ -44,6 +44,9 @@ public class HomeFragment extends Fragment {
 
         // connect to GUI
         childrenList = getActivity().findViewById(R.id.childrenList);
+
+        mDatabaseUserChildren.child("Children");
+
 
         //put in the card view for children
 

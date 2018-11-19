@@ -39,23 +39,40 @@ public class AddChildActivity extends AppCompatActivity {
         String lastName = childLastName.getText().toString().trim();
         String age = childAge.getText().toString().trim();
 
-        HashMap<String, String> dataMap = new HashMap<>();
-        dataMap.put("FirstName", firstName);
-        dataMap.put("LastName", lastName);
-        dataMap.put("Age", age);
+        if(validate()) {
+            HashMap<String, String> dataMap = new HashMap<>();
+            dataMap.put("FirstName", firstName);
+            dataMap.put("LastName", lastName);
+            dataMap.put("Age", age);
 
-        mDatabaseUserChildren.push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(AddChildActivity.this, "Child Added", Toast.LENGTH_LONG).show();
+            mDatabaseUserChildren.push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(AddChildActivity.this, "Child Added", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(AddChildActivity.this, "Something went wrong, check your internet", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(AddChildActivity.this, "Error Adding Child!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            });
+        }
+        else return;
+
         //Log.d("ChildViewActivity", "Database Clicked");
+    }
 
+    private boolean validate() {
+        boolean rtn = false;
+        String firstName = childFirstName.getText().toString();
+        String lastName = childLastName.getText().toString();
+        String age = childAge.getText().toString();
+
+        if(firstName.isEmpty() || lastName.isEmpty() || age.isEmpty()){
+            Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+        }else {
+            rtn = true;
+        }
+        return rtn;
     }
 }
