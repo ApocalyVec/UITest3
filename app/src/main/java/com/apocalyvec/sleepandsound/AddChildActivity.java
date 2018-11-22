@@ -7,18 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.apocalyvec.sleepandsound.AccountActivity.LoginActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,15 +21,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-
 public class AddChildActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
 
-    private EditText childFirstName;
-    private EditText childLastName;
+    private EditText childName;
     private EditText childAge;
     private ImageView mSelectImage;
 
@@ -49,12 +41,11 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("kids");
         mStorage = FirebaseStorage.getInstance().getReference();
 
-        childFirstName = findViewById(R.id.ChildFirstName);
-        childLastName = findViewById(R.id.ChildLastName);
-        childAge = findViewById(R.id.ChildAge);
+        childName = findViewById(R.id.etChildName);
+        childAge = findViewById(R.id.etChildAge);
         mSelectImage = findViewById(R.id.imageSelect);
 
         mProgress = new ProgressDialog(this);
@@ -85,8 +76,7 @@ public class AddChildActivity extends AppCompatActivity {
             mProgress.setMessage("Adding child ...");
             mProgress.show();
 
-            final String firstName = childFirstName.getText().toString().trim();
-            final String lastName = childLastName.getText().toString().trim();
+            final String name = childName.getText().toString().trim();
             final String age = childAge.getText().toString().trim();
             final StorageReference filepath = mStorage.child("Blog_Images").child(imageUri.getLastPathSegment());
 
@@ -115,10 +105,9 @@ public class AddChildActivity extends AppCompatActivity {
                             System.out.println("Upload " + photoStringLink);
 
                             DatabaseReference newChild = mDatabase.push();
-                            newChild.child("First Name").setValue(firstName);
-                            newChild.child("Last Name").setValue(lastName);
-                            newChild.child("Age").setValue(age);
-                            newChild.child("Photo").setValue(photoStringLink);
+                            newChild.child("name").setValue(name);
+                            newChild.child("age").setValue(age);
+                            newChild.child("image").setValue(photoStringLink);
                         }
 
                     } else {
@@ -127,11 +116,11 @@ public class AddChildActivity extends AppCompatActivity {
                     }
                 }
             });
+            finish();
+            Intent newIntent = new Intent(AddChildActivity.this, MainActivity.class);
+            startActivity(newIntent);
         }
         mProgress.dismiss();
-        finish();
-        Intent newIntent = new Intent(AddChildActivity.this, MainActivity.class);
-        startActivity(newIntent);
     }
 
 //            filepath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -175,11 +164,10 @@ public class AddChildActivity extends AppCompatActivity {
 
     private boolean validate() {
         boolean rtn = false;
-        String firstName = childFirstName.getText().toString();
-        String lastName = childLastName.getText().toString();
+        String name = childName.getText().toString();
         String age = childAge.getText().toString();
 
-        if(firstName.isEmpty() || lastName.isEmpty() || age.isEmpty() || (imageUri == null)){
+        if(name.isEmpty() || age.isEmpty() || (imageUri == null)){
             Toast.makeText(this, "Please enter all the details", Toast.LENGTH_SHORT).show();
         }else {
             rtn = true;
