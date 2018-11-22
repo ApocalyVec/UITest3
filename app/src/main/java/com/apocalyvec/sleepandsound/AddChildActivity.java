@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.apocalyvec.sleepandsound.AccountActivity.LoginActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,8 +30,9 @@ import java.util.HashMap;
 
 public class AddChildActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabaseUserChildren;
+    private DatabaseReference mDatabase;
     private StorageReference mStorage;
+
     private EditText childFirstName;
     private EditText childLastName;
     private EditText childAge;
@@ -40,14 +42,14 @@ public class AddChildActivity extends AppCompatActivity {
 
     private Uri imageUri = null;
 
-    private ProgressDialog mProgress;
+    ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        mDatabaseUserChildren = FirebaseDatabase.getInstance().getReference().child("Users").child("User_1").child("Children");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
 
         childFirstName = findViewById(R.id.ChildFirstName);
@@ -83,9 +85,9 @@ public class AddChildActivity extends AppCompatActivity {
             mProgress.setMessage("Adding child ...");
             mProgress.show();
 
-            String firstName = childFirstName.getText().toString().trim();
-            String lastName = childLastName.getText().toString().trim();
-            String age = childAge.getText().toString().trim();
+            final String firstName = childFirstName.getText().toString().trim();
+            final String lastName = childLastName.getText().toString().trim();
+            final String age = childAge.getText().toString().trim();
             final StorageReference filepath = mStorage.child("Blog_Images").child(imageUri.getLastPathSegment());
 
             UploadTask uploadTask = filepath.putFile(imageUri);
@@ -112,6 +114,11 @@ public class AddChildActivity extends AppCompatActivity {
                             String photoStringLink = downloadUri.toString(); //YOU WILL GET THE DOWNLOAD URL HERE !!!!
                             System.out.println("Upload " + photoStringLink);
 
+                            DatabaseReference newChild = mDatabase.push();
+                            newChild.child("First Name").setValue(firstName);
+                            newChild.child("Last Name").setValue(lastName);
+                            newChild.child("Age").setValue(age);
+                            newChild.child("Photo").setValue(photoStringLink);
                         }
 
                     } else {
@@ -120,6 +127,12 @@ public class AddChildActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+        mProgress.dismiss();
+        finish();
+        Intent newIntent = new Intent(AddChildActivity.this, MainActivity.class);
+        startActivity(newIntent);
+    }
 
 //            filepath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<Uri>() {
 //                @Override
@@ -157,13 +170,8 @@ public class AddChildActivity extends AppCompatActivity {
 //                    }
 //                }
 //            });
-            mProgress.dismiss();
-        }
         // if the information are not added in full
-        else return;
-
         //Log.d("ChildViewActivity", "Database Clicked");
-    }
 
     private boolean validate() {
         boolean rtn = false;
