@@ -1,25 +1,24 @@
 package com.apocalyvec.sleepandsound;
 
 public class Kids {
-    private String name;
+    private String kidName;
     private String age;
+    private String image;
 
-    public Kids() {
+    public Kids() {}
 
-    }
-
-    public Kids(String firstName, String lastName, String age, String image) {
-        this.name = firstName;
+    public Kids(String kidName, String age, String image) {
+        this.kidName = kidName;
         this.age = age;
         this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getkidName() {
+        return kidName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String kidName) {
+        this.kidName = kidName;
     }
 
     public String getAge() {
@@ -37,6 +36,4 @@ public class Kids {
     public void setImage(String image) {
         this.image = image;
     }
-
-    private String image;
 }

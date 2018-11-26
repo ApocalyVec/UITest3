@@ -19,6 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView resetPassword;
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference rootRef;
 
     private ProgressDialog progressDialog;
 
@@ -48,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         resetPassword = findViewById(R.id.tvForgotPassword);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
 
@@ -55,12 +62,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // automatically login if the user has already logged in
         if(user != null) {
+            verifyUserExistence();
             finish();
             Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(newIntent);
-        }
-        else {
-            verifyUserExistence();
         }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +93,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void verifyUserExistence() {
+        String currentUserID = firebaseAuth.getCurrentUser().getUid();
+        rootRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("name").exists()) {
+                    Toast.makeText(LoginActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+                }
+                else {
+//                    Toast.makeText(LoginActivity.this, "", Toast.LENGTH_SHORT).show();
+//                    Intent newIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+//                    startActivity(newIntent);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void validate() {

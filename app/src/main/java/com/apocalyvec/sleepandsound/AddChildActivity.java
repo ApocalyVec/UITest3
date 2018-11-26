@@ -15,16 +15,21 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+
 public class AddChildActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference rootRef;
     private StorageReference mStorage;
+    private FirebaseAuth mAuth;
+    private String currentUserID;
 
     private EditText childName;
     private EditText childAge;
@@ -41,8 +46,11 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("kids");
+        //connect to the database
+        rootRef = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
 
         childName = findViewById(R.id.etChildName);
         childAge = findViewById(R.id.etChildAge);
@@ -98,16 +106,33 @@ public class AddChildActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         System.out.println("Upload " + downloadUri);
-                        Toast.makeText(AddChildActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddChildActivity.this, "Successfully added to storage", Toast.LENGTH_SHORT).show();
                         if (downloadUri != null) {
 
                             String photoStringLink = downloadUri.toString(); //YOU WILL GET THE DOWNLOAD URL HERE !!!!
                             System.out.println("Upload " + photoStringLink);
 
-                            DatabaseReference newChild = mDatabase.push();
-                            newChild.child("name").setValue(name);
-                            newChild.child("age").setValue(age);
-                            newChild.child("image").setValue(photoStringLink);
+//                            DatabaseReference newChild = mDatabase.push();
+//                            newChild.child("name").setValue(name);
+//                            newChild.child("age").setValue(age);
+//                            newChild.child("image").setValue(photoStringLink);
+
+                            HashMap<String, String> kidMap = new HashMap<>();
+                            kidMap.put("kidName", name);
+                            kidMap.put("age", age);
+                            kidMap.put("image", photoStringLink);
+                            rootRef.child("Users").child(currentUserID).child("kids").push().setValue(kidMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()) {
+                                        Toast.makeText(AddChildActivity.this, "Successfully added kid", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        String message = task.getException().toString();
+                                        Toast.makeText(AddChildActivity.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
 
                     } else {
@@ -122,45 +147,6 @@ public class AddChildActivity extends AppCompatActivity {
         }
         mProgress.dismiss();
     }
-
-//            filepath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Uri> task) {
-//                    if(task.isSuccessful()) {
-//                        Uri downloadUri = task.getResult();
-//
-//                    }
-//                }
-//            });
-
-//            filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {  // use on complete listerer
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    // download the target URL
-////                    Uri downloadUri = task.getRe();
-//                }
-//            });
-
-
-            //using real-time database
-//            HashMap<String, String> dataMap = new HashMap<>();
-//            dataMap.put("FirstName", firstName);
-//            dataMap.put("LastName", lastName);
-//            dataMap.put("Age", age);
-//
-//            mDatabaseUserChildren.push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if(task.isSuccessful()) {
-//                        Toast.makeText(AddChildActivity.this, "Child Added", Toast.LENGTH_LONG).show();
-//                    }
-//                    else {
-//                        Toast.makeText(AddChildActivity.this, "Something went wrong, check your internet", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            });
-        // if the information are not added in full
-        //Log.d("ChildViewActivity", "Database Clicked");
 
     private boolean validate() {
         boolean rtn = false;

@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class SignupActivity extends AppCompatActivity {
 
     private EditText userName, userPassword, userEmail;
@@ -63,6 +65,22 @@ public class SignupActivity extends AppCompatActivity {
                                 //put user information in the database
                                 String currentUserID = firebaseAuth.getCurrentUser().getUid();
                                 rootRef.child("Users").child(currentUserID).setValue(name);
+
+                                HashMap<String, String> profileMap = new HashMap<> ();
+                                profileMap.put("uid", currentUserID);
+                                profileMap.put("name", name);
+                                rootRef.child("Users").child(currentUserID).setValue(profileMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()) {
+//                                            Toast.makeText(SignupActivity.this, "New user added", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            String message = task.getException().toString();
+                                            Toast.makeText(SignupActivity.this, "Error: "+ message, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
 
                                 Toast.makeText(SignupActivity.this, "Registered, You Are Good To Go!", Toast.LENGTH_SHORT).show();;
                                 Intent newIntent = new Intent(SignupActivity.this, LoginActivity.class);
