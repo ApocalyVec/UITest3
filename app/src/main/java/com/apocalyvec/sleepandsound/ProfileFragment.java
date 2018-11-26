@@ -20,4 +20,8 @@ public class ProfileFragment extends Fragment {
         user_email = getActivity().findViewById(R.id.user_email);
         return inflater.inflate(com.apocalyvec.sleepandsound.R.layout.fragment_profile, container, false);
     }
+
+    private void RetrieveUserInfo() {
+
+    }
 }

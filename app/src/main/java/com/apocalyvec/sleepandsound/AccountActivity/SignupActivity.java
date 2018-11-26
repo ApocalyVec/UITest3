@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -26,13 +28,16 @@ public class SignupActivity extends AppCompatActivity {
     ProgressBar signUpProgress;
     private TextView userLogin;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference rootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        //connect to database
         firebaseAuth = FirebaseAuth.getInstance();
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
         //define UI elements
         setupUIViews();
@@ -47,6 +52,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     //Upload to the database
                     //String name = userName.getText().toString().trim();
+                    final String name = userName.getText().toString().trim();
                     String password = userPassword.getText().toString().trim();
                     String email = userEmail.getText().toString().trim();
 
@@ -54,12 +60,17 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
+                                //put user information in the database
+                                String currentUserID = firebaseAuth.getCurrentUser().getUid();
+                                rootRef.child("Users").child(currentUserID).setValue(name);
+
                                 Toast.makeText(SignupActivity.this, "Registered, You Are Good To Go!", Toast.LENGTH_SHORT).show();;
                                 Intent newIntent = new Intent(SignupActivity.this, LoginActivity.class);
                                 startActivity(newIntent);
                             }
                             else {
-                                Toast.makeText(SignupActivity.this, "Something Weng Wrong, Check Your Internet", Toast.LENGTH_SHORT).show();;
+                                String message = task.getException().toString();
+                                Toast.makeText(SignupActivity.this, "Something Weng Wrong, Error: "+message, Toast.LENGTH_SHORT).show();;
                             }
                         }
                     });

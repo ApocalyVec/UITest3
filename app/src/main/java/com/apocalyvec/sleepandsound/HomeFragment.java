@@ -70,18 +70,24 @@ public class HomeFragment extends Fragment {
                 mDatabaseKids.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        //temporary
+                        String kidImage = "https://firebasestorage.googleapis.com/v0/b/sleepandsound-d1073.appspot.com/o/Blog_Images%2Fimage%3A59?alt=media&token=d45a0704-2e2a-429b-888b-18e7537f5bc8";
+                        String kidName = "Jack";
+                        String kidAge = "12";
+
                         if(dataSnapshot.hasChild("image")) {
-                            String kidImage = dataSnapshot.child("image").getValue().toString();
-                            String kidName = dataSnapshot.child("name").getValue().toString();
-                            String kidAge = dataSnapshot.child("age").getValue().toString();
+//                            String kidImage = dataSnapshot.child("image").getValue().toString();
+//                            String kidName = dataSnapshot.child("name").getValue().toString();
+//                            String kidAge = dataSnapshot.child("age").getValue().toString();
 
                             holder.setName(kidName);
                             holder.setAge(kidAge);
                             Picasso.get().load(kidImage).placeholder(R.drawable.ic_profile).into(holder.childImage);
                         }
                         else { //if the has not set the profile image
-                            String kidName = dataSnapshot.child("name").getValue().toString();
-                            String kidAge = dataSnapshot.child("age").getValue().toString();
+//                            String kidName = dataSnapshot.child("name").getValue().toString();
+//                            String kidAge = dataSnapshot.child("age").getValue().toString();
 
                             holder.setName(kidName);
                             holder.setAge(kidAge);
@@ -102,7 +108,7 @@ public class HomeFragment extends Fragment {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.child_row, viewGroup, false);
                 kidsViewHolder viewHolder = new kidsViewHolder(view);
                 return viewHolder;
-            };
+            }
         };
 
         mKidsList.setAdapter(firebaseRecyclerAdapter);

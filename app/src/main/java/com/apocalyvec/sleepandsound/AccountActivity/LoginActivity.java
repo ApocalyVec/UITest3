@@ -59,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
             Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(newIntent);
         }
+        else {
+            verifyUserExistence();
+        }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +85,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(newIntent);
             }
         });
+    }
+
+    private void verifyUserExistence() {
+
     }
 
     private void validate() {
