@@ -17,7 +17,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        user_email = getActivity().findViewById(R.id.user_email);
+//        user_email = getActivity().findViewById(R.id.user_email);
         return inflater.inflate(com.apocalyvec.sleepandsound.R.layout.fragment_profile, container, false);
     }
 
