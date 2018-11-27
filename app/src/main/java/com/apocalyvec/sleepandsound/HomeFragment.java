@@ -71,10 +71,19 @@ public class HomeFragment extends Fragment {
 
         FirebaseRecyclerAdapter<Kids, kidsViewHolder> adapter = new FirebaseRecyclerAdapter<Kids, kidsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull kidsViewHolder holder, int position, @NonNull Kids model) {
+            protected void onBindViewHolder(@NonNull kidsViewHolder holder, final int position, @NonNull Kids model) {
                 holder.childName.setText(model.getkidName());
                 holder.childage.setText(model.getAge());
                 Picasso.get().load(model.getImage()).into(holder.childImage);
+
+                // make the item in the view clickable
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String visit_user = getRef(position).getKey();
+
+                    }
+                });
             }
 
             @NonNull

@@ -5,33 +5,36 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ChildViewActivity extends AppCompatActivity {
 
-    private Button mFireBaseBtn;
-    private DatabaseReference mDatabase;
+    private DatabaseReference rootRef;
+
+    //ui fields
+    private TextView childName;
+    private Button updateButton;
+    private CircleImageView childImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_view);
 
-        mFireBaseBtn = (Button) findViewById(R.id.mFireBaseBtn);
+//        mFireBaseBtn = (Button) findViewById(R.id.mFireBaseBtn);
 
         //connect to the database
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
-        mFireBaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 1 - create CHILD in root object
-                // 2 - assign some value to the CHILD object
-                mDatabase.child("Name").setValue("Ziheng Li");
-                Log.d("ChildViewActivity", "Database Clicked");
-            }
-        });
+        //connect to UI element
+        childName = findViewById(R.id.cv_child_name);
+        updateButton = findViewById(R.id.cv_child_update);
+        childImage = findViewById(R.id.cv_child_image);
+
     }
 }

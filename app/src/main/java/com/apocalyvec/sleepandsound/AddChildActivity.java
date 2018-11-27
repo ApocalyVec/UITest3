@@ -116,12 +116,14 @@ public class AddChildActivity extends AppCompatActivity {
 //                            newChild.child("name").setValue(name);
 //                            newChild.child("age").setValue(age);
 //                            newChild.child("image").setValue(photoStringLink);
-
+                            String kidID = rootRef.child("Users").child(currentUserID).child("kids").push().getKey();
                             HashMap<String, String> kidMap = new HashMap<>();
                             kidMap.put("kidName", name);
                             kidMap.put("age", age);
                             kidMap.put("image", photoStringLink);
-                            rootRef.child("Users").child(currentUserID).child("kids").push().setValue(kidMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            kidMap.put("kid", kidID);
+
+                            rootRef.child("Users").child(currentUserID).child("kids").child(kidID).setValue(kidMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
