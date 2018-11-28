@@ -90,10 +90,24 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getActivity(), "Please put your user name.", Toast.LENGTH_SHORT).show();
         }
         else {
-            HashMap<String, String> profileMap = new HashMap<> ();
-            profileMap.put("uid", currentUserID);
-            profileMap.put("name", setUserName);
-            rootRef.child("Users").child(currentUserID).setValue(profileMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            HashMap<String, String> profileMap = new HashMap<> ();
+//            profileMap.put("uid", currentUserID);
+//            profileMap.put("name", setUserName);
+
+//            rootRef.child("Users").child(currentUserID).setValue(profileMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    if(task.isSuccessful()) {
+//                        Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else {
+//                        String message = task.getException().toString();
+//                        Toast.makeText(getActivity(), "Error: "+ message, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+
+            rootRef.child("Users").child(currentUserID).child("name").setValue(setUserName).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
