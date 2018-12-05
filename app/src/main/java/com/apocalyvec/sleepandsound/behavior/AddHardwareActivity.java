@@ -15,6 +15,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 public class AddHardwareActivity extends AppCompatActivity {
 
     // UI elements
@@ -37,6 +39,12 @@ public class AddHardwareActivity extends AppCompatActivity {
 
         //connect to firebase
         hw_ref = FirebaseDatabase.getInstance().getReference().child("hardwares");
+
+        //Dummy for now
+        HashMap<String, String> kidMap = new HashMap<> ();
+        kidMap.put("associatedKid", KID);
+
+        hw_ref.child("b7930720-b095-46aa-ba48-5f095d2856f8").child("associatedKid").setValue(KID);
     }
 
     @Override

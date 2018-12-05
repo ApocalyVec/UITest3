@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
 }
 
 dependencies {
@@ -38,6 +41,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+
 
 //    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     //implementation 'com.google.firebase:firebase-database:16.0.1:15.0.0'
