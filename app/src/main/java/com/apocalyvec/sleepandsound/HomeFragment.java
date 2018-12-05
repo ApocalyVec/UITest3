@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
                     public void onClick(View v) {
                         String visit_kid = getRef(position).getKey();
                         Intent childViewIntent = new Intent(getActivity(), ChildViewActivity.class);
-                        childViewIntent.putExtra("visit_kid", visit_kid);
+                        childViewIntent.putExtra("KID", visit_kid);
                         startActivity(childViewIntent);
                     }
                 });

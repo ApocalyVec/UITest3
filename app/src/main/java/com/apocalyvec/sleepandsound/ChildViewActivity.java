@@ -60,8 +60,12 @@ public class ChildViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_view);
+        try{
+            receiverKid = getIntent().getExtras().get("KID").toString();
+        }catch (NullPointerException e){
 
-        receiverKid = getIntent().getExtras().get("visit_kid").toString();
+        }
+
 
 //        mFireBaseBtn = (Button) findViewById(R.id.mFireBaseBtn);
 
@@ -102,9 +106,6 @@ public class ChildViewActivity extends AppCompatActivity {
         timeLabels.add("now");
         initializeGraphEntry();
 
-
-
-
         rootRef.child("Users").child(currentUserID).child("kids").child(receiverKid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -121,9 +122,10 @@ public class ChildViewActivity extends AppCompatActivity {
         associateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent childViewIntent = new Intent(ChildViewActivity.this, AddHardwareActivity.class);
-                childViewIntent.putExtra("KID", receiverKid);
-                startActivity(childViewIntent);
+                Intent AddHardwareIntent = new Intent(ChildViewActivity.this, AddHardwareActivity.class);
+
+                AddHardwareIntent.putExtra("KID", receiverKid);
+                startActivity(AddHardwareIntent);
             }
         });
 

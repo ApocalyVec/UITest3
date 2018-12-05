@@ -1,6 +1,7 @@
 package com.apocalyvec.sleepandsound;
 
 import android.app.Application;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -57,8 +59,18 @@ public class AddHardwareActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Hardware, AddHardwareViewHolder> adapter = new FirebaseRecyclerAdapter<Hardware, AddHardwareViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull AddHardwareViewHolder holder, int position, @NonNull Hardware model) {
+            protected void onBindViewHolder(@NonNull AddHardwareViewHolder holder, final int position, @NonNull final Hardware model) {
                 holder.tv_hwTimeStamp.setText("Registered on" + model.getTimestamp());
+                holder.btnAssocaited.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String hardware_pid = model.getPid();
+                        Intent childViewIntent = new Intent(AddHardwareActivity.this, ChildViewActivity.class);
+                        childViewIntent.putExtra("KID", KID);
+                        childViewIntent.putExtra("hardware_pid", hardware_pid);
+                        startActivity(childViewIntent);
+                    }
+                });
             }
 
             @NonNull
@@ -76,14 +88,22 @@ public class AddHardwareActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
+
     public static class AddHardwareViewHolder extends RecyclerView.ViewHolder {
         TextView tv_hwTimeStamp;
         View mView;
+        Button btnAssocaited;
 
         public AddHardwareViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
             tv_hwTimeStamp = mView.findViewById(R.id.tv_register_time);
+            btnAssocaited = mView.findViewById(R.id.btn_associate_hardware);
         }
     }
 }
