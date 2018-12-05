@@ -43,7 +43,7 @@
         <activity
             android:name=".AccountActivity.ResetPasswordActivity"
             android:parentActivityName=".AccountActivity.LoginActivity" />
-        <activity android:name=".behavior.AddHardwareActivity"></activity>
+        <activity android:name=".AddHardwareActivity"></activity>
     </application>
 
 </manifest>

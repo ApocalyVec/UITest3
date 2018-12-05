@@ -1,4 +1,4 @@
-package com.apocalyvec.sleepandsound.behavior;
+package com.apocalyvec.sleepandsound;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.apocalyvec.sleepandsound.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +43,7 @@ public class AddHardwareActivity extends AppCompatActivity {
         HashMap<String, String> kidMap = new HashMap<> ();
         kidMap.put("associatedKid", KID);
 
-        hw_ref.child("b7930720-b095-46aa-ba48-5f095d2856f8").child("associatedKid").setValue(KID);
+        hw_ref.child("6c5687be-728d-461e-ac30-30c4196d0a0c").child("associatedKid").setValue(KID);
     }
 
     @Override

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.apocalyvec.sleepandsound.behavior.AddHardwareActivity;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -64,7 +63,7 @@ public class ChildViewActivity extends AppCompatActivity {
 
         //connect to the database
         rootRef = FirebaseDatabase.getInstance().getReference();
-        hardwareRef = rootRef.child("hardwares").child("b7930720-b095-46aa-ba48-5f095d2856f8"); // this needs to be changed, it should look for associated hardware automatically
+        hardwareRef = rootRef.child("hardwares").child("6c5687be-728d-461e-ac30-30c4196d0a0c"); // this needs to be changed, it should look for associated hardware automatically
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         tv_ls = findViewById(R.id.tv_ls);
@@ -176,7 +175,8 @@ public class ChildViewActivity extends AppCompatActivity {
                 tempChart.setDescription("Temperature Data");
                 tempChart.setDescriptionTextSize(16f);
                 tempChart.invalidate();
-                tempChart.animateY(1500);
+
+                //tempChart.animateY(1500);
             }
 
             @Override
