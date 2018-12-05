@@ -2,23 +2,22 @@ package com.apocalyvec.sleepandsound;
 
 public class Hardware {
 
-    public String Timestamp;
+    public String timestamp;
     public String pid;
 
     public Hardware() {}
 
-    public Hardware(String Timestamp, String pid) {
-        this.Timestamp = Timestamp;
+    public Hardware(String timestamp, String pid) {
+        this.timestamp = timestamp;
         this.pid = pid;
-
     }
 
     public String getTimestamp() {
-        return Timestamp;
+        return timestamp;
     }
 
-    public void setTimestamp(String Timestamp) {
-        this.Timestamp = Timestamp;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getPid() {

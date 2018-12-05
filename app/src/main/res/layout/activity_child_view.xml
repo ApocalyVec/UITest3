@@ -38,17 +38,18 @@
                     android:orientation="vertical"
                     android:layout_marginTop="50dp"
                     android:layout_marginLeft="30dp">
+
                     <TextView
                         android:id="@+id/tv_ls"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Light Sensor Data" />
+                        android:text="No Product Associated" />
+
                     <TextView
                         android:id="@+id/tv_mcp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Microphone Data"
-                        android:layout_marginTop="50dp"/>
+                        android:layout_marginTop="50dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -72,12 +73,12 @@
                     android:id="@+id/btn_cv_associate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
                     android:layout_below="@+id/set_user_name"
+                    android:layout_marginLeft="70dp"
                     android:background="@drawable/button_style"
                     android:inputType="textMultiLine"
                     android:padding="6dp"
-                    android:text="Associate Hardware"
+                    android:text="Associate Product"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@android:color/background_light"

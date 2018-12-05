@@ -116,17 +116,5 @@ public class HomeFragment extends Fragment {
             childage = mView.findViewById(R.id.child_age);
             childImage = mView.findViewById(R.id.child_photo);
         }
-
-//        public void setName(String name) {
-//            childName.setText(name);
-//        }
-//
-//        public void setAge(String age) {
-//            childage.setText(age);
-//        }
-//
-//        public void setKidImage(Uri imageUri) {
-//            childImage.setImageURI(imageUri);
-//        }
     }
 }

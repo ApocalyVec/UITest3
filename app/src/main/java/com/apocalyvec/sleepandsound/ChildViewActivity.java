@@ -132,21 +132,19 @@ public class ChildViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-//                try{
-//                    tempEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("temp").getValue().toString()), i));
-//                }catch (NumberFormatException e) {
-//                    e.printStackTrace();
-//                    Log.e("ChildViewActivity", "Temperature Sensor Fault" +e.toString());
-//                    Toast.makeText( ChildViewActivity.this, "Temperature Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
-//                }
-
-                tv_ls.setText("Lighting in the Room: " + dataSnapshot.getValue().toString());
-                try{
-                    Float.parseFloat(dataSnapshot.getValue().toString());
-                }catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    Log.e("ChildViewActivity", "Light Sensor Fault" +e.toString());
-                    tv_ls.setText("Light Sensor Fault: disconnected");
+                // no hardware is associated
+                if (dataSnapshot.getValue() == null) {
+                    Toast.makeText(ChildViewActivity.this, "No Product Associated with this Child", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    tv_ls.setText("Lighting in the Room: " + dataSnapshot.getValue().toString());
+                    try{
+                        Float.parseFloat(dataSnapshot.getValue().toString());
+                    }catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        Log.e("ChildViewActivity", "Light Sensor Fault" +e.toString());
+                        tv_ls.setText("Light Sensor Fault: disconnected");
+                    }
                 }
             }
 
@@ -160,16 +158,19 @@ public class ChildViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String a = dataSnapshot.getValue().toString();
-                Log.e("Noise value", a);
 
-                tv_mcp.setText("Noise in the Room: " + dataSnapshot.getValue().toString());
-                try{
-                    Float.parseFloat(dataSnapshot.getValue().toString());
-                }catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    Log.e("ChildViewActivity", "Microphone Fault" +e.toString());
-                    tv_mcp.setText("Microphone Fault: disconnected");
+                if (dataSnapshot.getValue() == null) {
+//                    Toast.makeText(ChildViewActivity.this, "No Product Associated with this Child", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    tv_mcp.setText("Noise in the Room: " + dataSnapshot.getValue().toString());
+                    try{
+                        Float.parseFloat(dataSnapshot.getValue().toString());
+                    }catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        Log.e("ChildViewActivity", "Microphone Fault" +e.toString());
+                        tv_mcp.setText("Microphone Fault: disconnected");
+                    }
                 }
             }
 
@@ -182,45 +183,49 @@ public class ChildViewActivity extends AppCompatActivity {
         hardwareRef.child("ptData").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(int i = 0; i <= 9; i++) {
-                    try{
-                        presEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("pres").getValue().toString()), i));
-                    }catch (NumberFormatException e) {
-                        e.printStackTrace();
-                        Log.e("ChildViewActivity", "Pressure Sensor Fault" +e.toString());
-                        Toast.makeText(ChildViewActivity.this, "Pressure Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    try{
-                        tempEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("temp").getValue().toString()), i));
-                    }catch (NumberFormatException e) {
-                        e.printStackTrace();
-                        Log.e("ChildViewActivity", "Temperature Sensor Fault" +e.toString());
-                        Toast.makeText( ChildViewActivity.this, "Temperature Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
+                if(dataSnapshot.getValue() == null) {
+//                    Toast.makeText(ChildViewActivity.this, "No Product Associated with this Child", Toast.LENGTH_SHORT).show();
                 }
+                else {
+                    for(int i = 0; i <= 9; i++) {
+                        try{
+                            presEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("pres").getValue().toString()), i));
+                        }catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            Log.e("ChildViewActivity", "Pressure Sensor Fault" +e.toString());
+                            Toast.makeText(ChildViewActivity.this, "Pressure Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
+                        }
 
-                BarDataSet presbardateset = new BarDataSet(presEntries, "Hours");
-                BarDataSet tempbardateset = new BarDataSet(tempEntries, "Hours");
-                presbardateset.setColors(ColorTemplate.COLORFUL_COLORS);
-                tempbardateset.setColors(ColorTemplate.COLORFUL_COLORS);
+                        try{
+                            tempEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("temp").getValue().toString()), i));
+                        }catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            Log.e("ChildViewActivity", "Temperature Sensor Fault" +e.toString());
+                            Toast.makeText( ChildViewActivity.this, "Temperature Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
+                        }
 
-                BarData presdata = new BarData(timeLabels, presbardateset);
-                BarData tempdata = new BarData(timeLabels, tempbardateset);
+                    }
 
-                presChart.setData(presdata);
-                presChart.setDescription("Pressure Data");
-                presChart.setDescriptionTextSize(16f);
-                presChart.invalidate();
-                presChart.animateY(1500);
+                    BarDataSet presbardateset = new BarDataSet(presEntries, "Hours");
+                    BarDataSet tempbardateset = new BarDataSet(tempEntries, "Hours");
+                    presbardateset.setColors(ColorTemplate.COLORFUL_COLORS);
+                    tempbardateset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-                tempChart.setData(tempdata);
-                tempChart.setDescription("Temperature Data");
-                tempChart.setDescriptionTextSize(16f);
-                tempChart.invalidate();
+                    BarData presdata = new BarData(timeLabels, presbardateset);
+                    BarData tempdata = new BarData(timeLabels, tempbardateset);
 
-                //tempChart.animateY(1500);
+                    presChart.setData(presdata);
+                    presChart.setDescription("Pressure Data");
+                    presChart.setDescriptionTextSize(16f);
+                    presChart.invalidate();
+                    presChart.animateY(1500);
+
+                    tempChart.setData(tempdata);
+                    tempChart.setDescription("Temperature Data");
+                    tempChart.setDescriptionTextSize(16f);
+                    tempChart.invalidate();
+                    tempChart.animateY(1500);
+                }
             }
 
             @Override
