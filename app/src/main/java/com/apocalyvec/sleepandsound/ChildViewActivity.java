@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,6 +53,8 @@ public class ChildViewActivity extends AppCompatActivity {
     private BarChart tempChart;
 
     private Calendar rightNow;
+
+    private boolean databaseErrorFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +131,23 @@ public class ChildViewActivity extends AppCompatActivity {
         hardwareRef.child("LS_data").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+//                try{
+//                    tempEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("temp").getValue().toString()), i));
+//                }catch (NumberFormatException e) {
+//                    e.printStackTrace();
+//                    Log.e("ChildViewActivity", "Temperature Sensor Fault" +e.toString());
+//                    Toast.makeText( ChildViewActivity.this, "Temperature Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
+//                }
+
                 tv_ls.setText("Lighting in the Room: " + dataSnapshot.getValue().toString());
+                try{
+                    Float.parseFloat(dataSnapshot.getValue().toString());
+                }catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    Log.e("ChildViewActivity", "Light Sensor Fault" +e.toString());
+                    tv_ls.setText("Light Sensor Fault: disconnected");
+                }
             }
 
             @Override
@@ -140,7 +159,18 @@ public class ChildViewActivity extends AppCompatActivity {
         hardwareRef.child("MCP_data").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String a = dataSnapshot.getValue().toString();
+                Log.e("Noise value", a);
+
                 tv_mcp.setText("Noise in the Room: " + dataSnapshot.getValue().toString());
+                try{
+                    Float.parseFloat(dataSnapshot.getValue().toString());
+                }catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    Log.e("ChildViewActivity", "Microphone Fault" +e.toString());
+                    tv_mcp.setText("Microphone Fault: disconnected");
+                }
             }
 
             @Override
@@ -155,10 +185,18 @@ public class ChildViewActivity extends AppCompatActivity {
                 for(int i = 0; i <= 9; i++) {
                     try{
                         presEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("pres").getValue().toString()), i));
+                    }catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        Log.e("ChildViewActivity", "Pressure Sensor Fault" +e.toString());
+                        Toast.makeText(ChildViewActivity.this, "Pressure Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    try{
                         tempEntries.set(i, new BarEntry(Float.parseFloat(dataSnapshot.child("hour"+Integer.toString(i)).child("temp").getValue().toString()), i));
                     }catch (NumberFormatException e) {
                         e.printStackTrace();
-                        Toast.makeText(ChildViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        Log.e("ChildViewActivity", "Temperature Sensor Fault" +e.toString());
+                        Toast.makeText( ChildViewActivity.this, "Temperature Sensor Fault: " +e.toString(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
