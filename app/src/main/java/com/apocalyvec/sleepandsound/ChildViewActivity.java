@@ -60,13 +60,9 @@ public class ChildViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_view);
-        try{
+        if (getIntent().hasExtra("KID")) {
             receiverKid = getIntent().getExtras().get("KID").toString();
-        }catch (NullPointerException e){
-
         }
-
-
 //        mFireBaseBtn = (Button) findViewById(R.id.mFireBaseBtn);
 
         //connect to the database

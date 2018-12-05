@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -91,7 +92,17 @@ public class AddHardwareActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent childViewIntent = new Intent(AddHardwareActivity.this, ChildViewActivity.class);
+        childViewIntent.putExtra("KID", KID);
+        startActivity(childViewIntent);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent childViewIntent = new Intent(AddHardwareActivity.this, ChildViewActivity.class);
+        childViewIntent.putExtra("KID", KID);
+        startActivity(childViewIntent);
+        return super.onOptionsItemSelected(item);
     }
 
     public static class AddHardwareViewHolder extends RecyclerView.ViewHolder {
