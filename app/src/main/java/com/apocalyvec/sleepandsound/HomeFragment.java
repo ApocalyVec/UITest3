@@ -1,5 +1,6 @@
 package com.apocalyvec.sleepandsound;
 
+import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -80,8 +81,10 @@ public class HomeFragment extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String visit_user = getRef(position).getKey();
-
+                        String visit_kid = getRef(position).getKey();
+                        Intent childViewIntent = new Intent(getActivity(), ChildViewActivity.class);
+                        childViewIntent.putExtra("visit_kid", visit_kid);
+                        startActivity(childViewIntent);
                     }
                 });
             }

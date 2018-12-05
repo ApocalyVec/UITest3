@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.apocalyvec.sleepandsound">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,24 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".AccountActivity.LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionbar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ChildViewActivity"
@@ -36,10 +37,13 @@
         <activity
             android:name=".AddChildActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".AccountActivity.SignupActivity"
-            android:parentActivityName=".AccountActivity.LoginActivity"/>
-        <activity android:name=".AccountActivity.ResetPasswordActivity"
-            android:parentActivityName=".AccountActivity.LoginActivity"></activity>
+        <activity
+            android:name=".AccountActivity.SignupActivity"
+            android:parentActivityName=".AccountActivity.LoginActivity" />
+        <activity
+            android:name=".AccountActivity.ResetPasswordActivity"
+            android:parentActivityName=".AccountActivity.LoginActivity" />
+        <activity android:name=".behavior.AddHardwareActivity"></activity>
     </application>
 
 </manifest>
