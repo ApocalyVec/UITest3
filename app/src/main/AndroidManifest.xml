@@ -44,6 +44,7 @@
             android:name=".AccountActivity.ResetPasswordActivity"
             android:parentActivityName=".AccountActivity.LoginActivity" />
         <activity android:name=".AddHardwareActivity"/>
+        <activity android:name=".CalendarActivity"/>
     </application>
 
 </manifest>

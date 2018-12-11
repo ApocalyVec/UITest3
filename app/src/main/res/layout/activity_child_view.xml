@@ -86,6 +86,24 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/btnSelectDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calendar"
+                    android:layout_marginLeft="50dp"/>
+                <TextView
+                    android:id="@+id/tvSelectedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selected Date"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="160dp"/>
+            </LinearLayout>
 
 
             <com.github.mikephil.charting.charts.BarChart

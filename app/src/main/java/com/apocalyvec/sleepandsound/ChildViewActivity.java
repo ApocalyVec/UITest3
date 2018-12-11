@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,8 @@ public class ChildViewActivity extends AppCompatActivity {
     private TextView tv_mcp;
     private Button associateButton;
     private CircleImageView childImage;
+    private TextView tvSelectedDate;
+    private ImageView btnSelectDate;
 
     //chart related fields
     private ArrayList<String> timeLabels;
@@ -79,6 +82,8 @@ public class ChildViewActivity extends AppCompatActivity {
         childImage = findViewById(R.id.cv_child_image);
         presChart = findViewById(R.id.pressure_graph);
         tempChart = findViewById(R.id.temperature_graph);
+        tvSelectedDate = findViewById(R.id.tvSelectedDate);
+        btnSelectDate = findViewById(R.id.btnSelectDate);
 
         //chart related initilizations
 
@@ -102,6 +107,17 @@ public class ChildViewActivity extends AppCompatActivity {
         timeLabels.add("now");
         initializeGraphEntry();
 
+        btnSelectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AddHardwareIntent = new Intent(ChildViewActivity.this, AddHardwareActivity.class);
+
+                AddHardwareIntent.putExtra("KID", receiverKid);
+                startActivity(AddHardwareIntent);
+            }
+        });
+
+        //this is problematic if coming from a view other than home fragment
         rootRef.child("Users").child(currentUserID).child("kids").child(receiverKid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -151,6 +167,8 @@ public class ChildViewActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         hardwareRef.child("MCP_data").addValueEventListener(new ValueEventListener() {
             @Override
