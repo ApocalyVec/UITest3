@@ -11,112 +11,145 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="400dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/cv_child_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="45dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_profile"
                     app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginLeft="30dp">
+                    app:civ_border_width="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_ls"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No Product Associated" />
-
-                    <TextView
-                        android:id="@+id/tv_mcp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="30dp">
                 <TextView
                     android:id="@+id/cv_child_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:text="Kid Name"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/edit_text_style"
+                    android:text="Kid Name"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_cv_associate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_child_image" />
 
-                <Button
+                <TextView
                     android:id="@+id/btn_cv_associate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/set_user_name"
-                    android:layout_marginLeft="70dp"
-                    android:background="@drawable/button_style"
-                    android:inputType="textMultiLine"
-                    android:padding="6dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="56dp"
                     android:text="Associate Product"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_child_image" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_light_on"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_cv_associate" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_bed_off"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_cv_associate" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_noise_on"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_cv_associate" />
+
                 <ImageView
                     android:id="@+id/btnSelectDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="52dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/calendar"
-                    android:layout_marginLeft="50dp"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
                 <TextView
                     android:id="@+id/tvSelectedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
                     android:text="Selected Date"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="160dp"/>
-            </LinearLayout>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.105"
+                    app:layout_constraintStart_toEndOf="@+id/btnSelectDate"
+                    app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="300dp" />
+
+            </android.support.constraint.ConstraintLayout>
 
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:layout_marginTop="80dp"
-                android:id="@+id/pressure_graph"
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/bed_graph"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"></com.github.mikephil.charting.charts.BarChart>
+                android:layout_height="500dp"
+                android:layout_marginTop="20dp"></com.github.mikephil.charting.charts.LineChart>
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:layout_marginTop="80dp"
-                android:id="@+id/temperature_graph"
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/light_graph"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"></com.github.mikephil.charting.charts.BarChart>
+                android:layout_height="500dp"
+                android:layout_marginTop="20dp"></com.github.mikephil.charting.charts.LineChart>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/noise_graph"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="20dp"></com.github.mikephil.charting.charts.LineChart>
         </LinearLayout>
     </ScrollView>
 

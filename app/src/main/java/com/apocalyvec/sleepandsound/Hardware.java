@@ -4,12 +4,14 @@ public class Hardware {
 
     public String timestamp;
     public String pid;
+    public String status;
 
     public Hardware() {}
 
-    public Hardware(String timestamp, String pid) {
+    public Hardware(String timestamp, String pid, String status) {
         this.timestamp = timestamp;
         this.pid = pid;
+        this.status = status;
     }
 
     public String getTimestamp() {
@@ -26,5 +28,13 @@ public class Hardware {
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

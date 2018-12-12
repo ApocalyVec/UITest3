@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,13 +24,16 @@ import java.util.HashMap;
 
 public class AddHardwareActivity extends AppCompatActivity {
 
+    private String KID;
+    private String UID;
+
     // UI elements
     private RecyclerView hw_list;
 
     //database elements
     private DatabaseReference hw_ref;
-
-    private String KID;
+    private DatabaseReference kid_ref;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +47,15 @@ public class AddHardwareActivity extends AppCompatActivity {
 
         //connect to firebase
         hw_ref = FirebaseDatabase.getInstance().getReference().child("hardwares");
+        mAuth = FirebaseAuth.getInstance();
+        UID = mAuth.getCurrentUser().getUid();
+        kid_ref = FirebaseDatabase.getInstance().getReference().child("Users").child(UID).child("kids").child(KID);
+
 
         //Dummy for now
-        HashMap<String, String> kidMap = new HashMap<> ();
-        kidMap.put("associatedKid", KID);
-
-        hw_ref.child("6c5687be-728d-461e-ac30-30c4196d0a0c").child("associatedKid").setValue(KID);
+//        HashMap<String, String> kidMap = new HashMap<> ();
+//        kidMap.put("associatedKid", KID);
+//        hw_ref.child("6c5687be-728d-461e-ac30-30c4196d0a0c").child("associatedKid").setValue(KID);
     }
 
     @Override
@@ -59,16 +66,28 @@ public class AddHardwareActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<Hardware>().setQuery(hw_ref, Hardware.class).build();
 
         FirebaseRecyclerAdapter<Hardware, AddHardwareViewHolder> adapter = new FirebaseRecyclerAdapter<Hardware, AddHardwareViewHolder>(options) {
+            //TODO only show UNASSOCIATED hardwares
             @Override
             protected void onBindViewHolder(@NonNull AddHardwareViewHolder holder, final int position, @NonNull final Hardware model) {
                 holder.tv_hwTimeStamp.setText("Registered on" + model.getTimestamp());
+
+                if(model.getStatus().equals("UNASSOCIATED")) {
+                    holder.tv_hwStatus.setText("Product Unassociated");
+                }
+                else {
+                    holder.tv_hwStatus.setText("Associated with " + model.getStatus());
+                }
                 holder.btnAssocaited.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String hardware_pid = model.getPid();
+                        String PID = model.getPid();
+
+                        kid_ref.child("associatedPID").setValue(PID);
+//                        hw_ref.child(PID).child("status").setValue(kid_ref.child("kidName"));
+
                         Intent childViewIntent = new Intent(AddHardwareActivity.this, ChildViewActivity.class);
                         childViewIntent.putExtra("KID", KID);
-                        childViewIntent.putExtra("hardware_pid", hardware_pid);
+                        childViewIntent.putExtra("PID", PID);
                         startActivity(childViewIntent);
                     }
                 });
@@ -107,6 +126,7 @@ public class AddHardwareActivity extends AppCompatActivity {
 
     public static class AddHardwareViewHolder extends RecyclerView.ViewHolder {
         TextView tv_hwTimeStamp;
+        TextView tv_hwStatus;
         View mView;
         Button btnAssocaited;
 
@@ -115,6 +135,7 @@ public class AddHardwareActivity extends AppCompatActivity {
             mView = itemView;
             tv_hwTimeStamp = mView.findViewById(R.id.tv_register_time);
             btnAssocaited = mView.findViewById(R.id.btn_associate_hardware);
+            tv_hwStatus = mView.findViewById(R.id.tv_status);
         }
     }
 }
