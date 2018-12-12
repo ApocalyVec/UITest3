@@ -33,6 +33,8 @@ public class ChildViewActivity extends AppCompatActivity {
     private String currentUserID;
     private FirebaseAuth mAuth;
 
+    private ValueEventListener hwDataListener;
+
     private String KID;
     private String PID = null;
 
@@ -44,6 +46,12 @@ public class ChildViewActivity extends AppCompatActivity {
     private CircleImageView childImage;
     private TextView tvSelectedDate;
     private ImageView btnSelectDate;
+
+    //status fields
+    private ImageView bedStatus;
+    private ImageView lightStatus;
+    private ImageView noiseStatus;
+
 
     //chart related fields
     private ArrayList<String> timeLabels;
@@ -106,6 +114,7 @@ public class ChildViewActivity extends AppCompatActivity {
                 if(dataSnapshot.hasChild("associatedPID")) {
                     //reset previous status
                     if(PID != null) {
+                        rootRef.child("hardwares").child(PID).removeEventListener(hwDataListener);
                         rootRef.child("hardwares").child(PID).child("status").setValue("UNASSOCIATED");
                     }
 
@@ -114,6 +123,45 @@ public class ChildViewActivity extends AppCompatActivity {
 
                     PID = dataSnapshot.child("associatedPID").getValue().toString();
                     rootRef.child("hardwares").child(PID).child("status").setValue(dataSnapshot.child("kidName").getValue());
+
+                    hwDataListener = rootRef.child("hardwares").child(PID).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild("data")) {
+                                //manage real-time data
+                                if(dataSnapshot.child("data").hasChild("now")) {
+                                    if(dataSnapshot.child("data").child("now").child("bed").getValue().toString().equals("out of bed")) {
+                                        bedStatus.setImageResource(R.drawable.ic_bed_off);
+                                    }
+                                    else {
+                                        bedStatus.setImageResource(R.drawable.ic_bed_on);
+                                    }
+
+                                    if(dataSnapshot.child("data").child("now").child("light").getValue().toString().equals("on")) {
+                                        lightStatus.setImageResource(R.drawable.ic_light_on);
+                                    }
+                                    else {
+                                        lightStatus.setImageResource(R.drawable.ic_light_off);
+                                    }
+
+                                    if(dataSnapshot.child("data").child("now").child("noise").getValue().toString().equals("normal")) {
+                                        noiseStatus.setImageResource(R.drawable.ic_noise_off);
+                                    }
+                                    else {
+                                        noiseStatus.setImageResource(R.drawable.ic_noise_on);
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(ChildViewActivity.this, "Data Error: no real-time data", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(ChildViewActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 else {
                     Toast.makeText(ChildViewActivity.this, "No Product Associated with this Child", Toast.LENGTH_SHORT).show();
@@ -140,7 +188,9 @@ public class ChildViewActivity extends AppCompatActivity {
         tvSelectedDate = findViewById(R.id.tvSelectedDate);
         btnSelectDate = findViewById(R.id.btnSelectDate);
 
-
+        bedStatus = findViewById(R.id.bedStatus);
+        lightStatus = findViewById(R.id.lightStatus);
+        noiseStatus = findViewById(R.id.noiseStatus);
 
         //chart related initilizations
 

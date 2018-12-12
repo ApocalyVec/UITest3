@@ -67,18 +67,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/cv_child_image" />
 
                 <ImageView
+                    android:id="@+id/lightStatus"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_light_on"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@+id/bedStatus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_cv_associate" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/bedStatus"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginStart="8dp"
@@ -90,6 +91,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/btn_cv_associate" />
 
                 <ImageView
+                    android:id="@+id/noiseStatus"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginStart="8dp"
@@ -97,7 +99,7 @@
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_noise_on"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/bedStatus"
                     app:layout_constraintTop_toBottomOf="@+id/btn_cv_associate" />
 
                 <ImageView
