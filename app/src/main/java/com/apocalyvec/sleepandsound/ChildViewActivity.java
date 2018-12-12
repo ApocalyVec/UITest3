@@ -385,6 +385,8 @@ public class ChildViewActivity extends AppCompatActivity {
 
 //        Toast.makeText(ChildViewActivity.this, "Date Diff is: " + dateDiff, Toast.LENGTH_SHORT).show();
         tvSelectedDate.setText(selectedDate.toString());
+
+        
     }
 
     void initializeGraphEntry() {
