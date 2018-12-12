@@ -122,6 +122,7 @@ public class AddChildActivity extends AppCompatActivity {
                             kidMap.put("age", age);
                             kidMap.put("image", photoStringLink);
                             kidMap.put("kid", kidID);
+                            kidMap.put("associatedPID", "none");
 
                             rootRef.child("Users").child(currentUserID).child("kids").child(kidID).setValue(kidMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

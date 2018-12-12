@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -33,6 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeFragment extends Fragment {
 
     private DatabaseReference userKidsRef;
+    private DatabaseReference roofRef;
 
     private RecyclerView mKidsList;
     private View homeView;
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment {
         // Connect to database
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
+        roofRef = FirebaseDatabase.getInstance().getReference();
         userKidsRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("kids");
     }
 
@@ -73,10 +76,56 @@ public class HomeFragment extends Fragment {
 
         FirebaseRecyclerAdapter<Kids, kidsViewHolder> adapter = new FirebaseRecyclerAdapter<Kids, kidsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull kidsViewHolder holder, final int position, @NonNull Kids model) {
-                holder.childName.setText(model.getkidName());
-                holder.childage.setText(model.getAge());
+            protected void onBindViewHolder(@NonNull final kidsViewHolder holder, final int position, @NonNull Kids model) {
+                holder.childName.setText(model.getKidName());
+                holder.childage.setText("Age: " + model.getAge());
                 Picasso.get().load(model.getImage()).into(holder.childImage);
+
+                if(!model.getAssociatedPID().equals("none")) {
+                    holder.hwStatus.setText("");
+                    roofRef.child("hardwares").child(model.getAssociatedPID()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild("data")) {
+                                //manage real-time data
+                                if(dataSnapshot.child("data").hasChild("now")) {
+                                    if(dataSnapshot.child("data").child("now").child("bed").getValue().toString().equals("out of bed")) {
+                                        holder.bedStatus.setImageResource(R.drawable.ic_bed_off);
+                                    }
+                                    else {
+                                        holder.bedStatus.setImageResource(R.drawable.ic_bed_on);
+                                    }
+
+                                    if(dataSnapshot.child("data").child("now").child("light").getValue().toString().equals("on")) {
+                                        holder.lightStatus.setImageResource(R.drawable.ic_light_on);
+                                    }
+                                    else {
+                                        holder.lightStatus.setImageResource(R.drawable.ic_light_off);
+                                    }
+
+                                    if(dataSnapshot.child("data").child("now").child("noise").getValue().toString().equals("normal")) {
+                                        holder.noiseStatus.setImageResource(R.drawable.ic_noise_off);
+                                    }
+                                    else {
+                                        holder.noiseStatus.setImageResource(R.drawable.ic_noise_on);
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(getContext(), "Data Error: no real-time data", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    holder.hwStatus.setText("No Product Associated");
+                }
+
 
                 // make the item in the view clickable
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +157,10 @@ public class HomeFragment extends Fragment {
         CircleImageView childImage;
         TextView childName;
         TextView childage;
+        ImageView lightStatus;
+        ImageView noiseStatus;
+        ImageView bedStatus;
+        TextView hwStatus;
 
         public kidsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -115,6 +168,12 @@ public class HomeFragment extends Fragment {
             childName = mView.findViewById(R.id.child_name);
             childage = mView.findViewById(R.id.child_age);
             childImage = mView.findViewById(R.id.child_photo);
+
+            lightStatus = mView.findViewById(R.id.HFlightStatus);
+            noiseStatus = mView.findViewById(R.id.HFnoiseStatus);
+            bedStatus = mView.findViewById(R.id.HFbedStatus);
+
+            hwStatus = mView.findViewById(R.id.HFhwStatus);
         }
     }
 }
