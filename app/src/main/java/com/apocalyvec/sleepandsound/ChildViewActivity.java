@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -67,7 +68,11 @@ public class ChildViewActivity extends AppCompatActivity {
     private LineChart bedChart;
     private LineChart noiseChart;
 
-    private Calendar rightNow;
+    //date related fields
+    private Calendar mCalendar;
+    private Date currentDate;
+    private Date selectedDate;
+    private Long dateDiff = (long)0;
 
     private boolean databaseErrorFlag;
 
@@ -363,6 +368,23 @@ public class ChildViewActivity extends AppCompatActivity {
 //
 //            }
 //        });
+
+        mCalendar = Calendar.getInstance();
+        currentDate = new Date(mCalendar.getTimeInMillis());
+
+        if (getIntent().hasExtra("SelectedDate")) {
+            selectedDate = (Date) getIntent().getExtras().get("SelectedDate");
+        }
+        else {
+            selectedDate = currentDate;
+        }
+        if(getIntent().hasExtra("dateDiff")) {
+            dateDiff = (Long) getIntent().getExtras().get("dateDiff");
+        }
+
+
+//        Toast.makeText(ChildViewActivity.this, "Date Diff is: " + dateDiff, Toast.LENGTH_SHORT).show();
+        tvSelectedDate.setText(selectedDate.toString());
     }
 
     void initializeGraphEntry() {
