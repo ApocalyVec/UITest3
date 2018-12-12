@@ -26,6 +26,7 @@ public class AddHardwareActivity extends AppCompatActivity {
 
     private String KID;
     private String UID;
+//    private String currentPID = null;
 
     // UI elements
     private RecyclerView hw_list;
@@ -41,6 +42,9 @@ public class AddHardwareActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_hardware);
 
         KID = getIntent().getExtras().get("KID").toString();
+//        if(getIntent().hasExtra("currentPID")) {
+//            currentPID = getIntent().getExtras().get("currentPID").toString();
+//        }
 
         //connect UI elements
         hw_list = findViewById(R.id.hw_list);
@@ -69,7 +73,7 @@ public class AddHardwareActivity extends AppCompatActivity {
             //TODO only show UNASSOCIATED hardwares
             @Override
             protected void onBindViewHolder(@NonNull AddHardwareViewHolder holder, final int position, @NonNull final Hardware model) {
-                holder.tv_hwTimeStamp.setText("Registered on" + model.getTimestamp());
+                holder.tv_hwTimeStamp.setText("Registered on " + model.getTimestamp());
 
                 if(model.getStatus().equals("UNASSOCIATED")) {
                     holder.tv_hwStatus.setText("Product Unassociated");
@@ -84,10 +88,15 @@ public class AddHardwareActivity extends AppCompatActivity {
 
                         kid_ref.child("associatedPID").setValue(PID);
 //                        hw_ref.child(PID).child("status").setValue(kid_ref.child("kidName"));
+                        //deassociated previous product
+//                        if(currentPID != null) {
+//                            hw_ref.child(currentPID).child("status").setValue("UNASSOCIATED");
+//                        }
 
                         Intent childViewIntent = new Intent(AddHardwareActivity.this, ChildViewActivity.class);
                         childViewIntent.putExtra("KID", KID);
                         childViewIntent.putExtra("PID", PID);
+
                         startActivity(childViewIntent);
                     }
                 });

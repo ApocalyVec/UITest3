@@ -29,11 +29,12 @@ public class ChildViewActivity extends AppCompatActivity {
 
     private DatabaseReference rootRef;
     private DatabaseReference kidRef;
+    private DatabaseReference allHwRef;
     private String currentUserID;
     private FirebaseAuth mAuth;
 
     private String KID;
-    private String PID;
+    private String PID = null;
 
     //ui fields
     private TextView childName;
@@ -67,7 +68,9 @@ public class ChildViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_view);
 
+        //connect to the database
         rootRef = FirebaseDatabase.getInstance().getReference();
+        allHwRef = rootRef.child("hardwares");
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
@@ -79,20 +82,41 @@ public class ChildViewActivity extends AppCompatActivity {
 
 //        mFireBaseBtn = (Button) findViewById(R.id.mFireBaseBtn);
 
-        //connect to the database
+
+//        allHwRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshotIterator : dataSnapshot.getChildren()) {
+//
+//                    User user = snapshot.getValue(User.class);
+//                    System.out.println(user.email);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(ChildViewActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
 
         kidRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("associatedPID")) {
-                    Toast.makeText(ChildViewActivity.this, "Child Associated with Product" + dataSnapshot.child("associatedPID").getValue(), Toast.LENGTH_SHORT).show();
+                    //reset previous status
+                    if(PID != null) {
+                        rootRef.child("hardwares").child(PID).child("status").setValue("UNASSOCIATED");
+                    }
+
+                    PID = dataSnapshot.child("associatedPID").getValue().toString();
+                    Toast.makeText(ChildViewActivity.this, "Child Associated with Product" + PID, Toast.LENGTH_SHORT).show();
+
+                    PID = dataSnapshot.child("associatedPID").getValue().toString();
+                    rootRef.child("hardwares").child(PID).child("status").setValue(dataSnapshot.child("kidName").getValue());
                 }
                 else {
                     Toast.makeText(ChildViewActivity.this, "No Product Associated with this Child", Toast.LENGTH_SHORT).show();
-                }
-                if(getIntent().hasExtra("PID")) {
-                    PID = getIntent().getExtras().get("PID").toString();
-                    rootRef.child("hardwares").child(PID).child("status").setValue(dataSnapshot.child("kidName").getValue());
                 }
             }
 
@@ -169,6 +193,9 @@ public class ChildViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent AddHardwareIntent = new Intent(ChildViewActivity.this, AddHardwareActivity.class);
 
+//                if(PID != null) {
+//                    AddHardwareIntent.putExtra("currentPID", PID);
+//                }
                 AddHardwareIntent.putExtra("KID", KID);
                 startActivity(AddHardwareIntent);
             }
